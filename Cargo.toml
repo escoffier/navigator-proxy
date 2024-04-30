@@ -1,0 +1,19 @@
+[package]
+name = "navigator-proxy"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+prometheus = "0"
+async-trait="0.1"
+# pingora = { version = "0.1", features = [ "lb", "proxy" ] }
+pingora ={ git = "https://github.com/escoffier/pingora", branch = "main" }
+pingora-http = { version = "0.1.1" }
+# pingora-core = { version = "0.1.1", default-features = false }
+pingora-core = { git = "https://github.com/escoffier/pingora", branch = "main"  }
+pingora-proxy = { version = "0.1.1" }
+log = {}
+env_logger = "0.9"
+structopt = "0.3"
