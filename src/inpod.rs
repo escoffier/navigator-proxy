@@ -17,7 +17,7 @@ fn new_netns(pid:Pid) -> OwnedFd {
             }
 
             if let Ok(newns) =
-                std::fs::File::open(format!("/proc/self/task/{}/ns/net", pid))
+                std::fs::File::open(format!("/proc/{}/ns/net", pid))
             {
                 new_netns = Some(newns.into());
             }
