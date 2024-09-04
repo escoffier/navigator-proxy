@@ -43,7 +43,9 @@ impl ProxyHttp for MyGateway {
         ctx: &mut Self::CTX,
     ) -> Result<Box<HttpPeer>> {
         let client_addr = session.downstream_session.client_addr().unwrap();
-        info!("down stream {client_addr:?}");
+        println!("Hello, world!");
+
+        println!("down stream {client_addr:?}");
         
         let addr = if session.req_header().uri.path().starts_with("/family") {
             ("44.193.104.184", 443)
@@ -95,10 +97,11 @@ impl ProxyHttp for MyGateway {
 fn main() {
     env_logger::init();
 
+    let opt = Opt::from_args();
+
     // read command line arguments
     let podns = inpod::new_inpod_netns(Pid::from_raw(3678871)).unwrap();
     let _ = podns.run(|| {
-        let opt = Opt::from_args();
         let mut my_server = Server::new(Some(opt)).unwrap();
         my_server.bootstrap();
 
