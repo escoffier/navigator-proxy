@@ -46,6 +46,9 @@ impl ProxyHttp for MyGateway {
         println!("Hello, world!");
 
         println!("down stream {client_addr:?}");
+
+       let remote = session.req_header().uri.host();
+       println!("remote addr {remote:?}");
         
         let addr = if session.req_header().uri.path().starts_with("/family") {
             ("44.193.104.184", 443)
