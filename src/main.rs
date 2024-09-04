@@ -47,9 +47,10 @@ impl ProxyHttp for MyGateway {
 
         println!("down stream {client_addr:?}");
 
-       let remote = session.req_header().uri.authority();
-       println!("remote addr {remote:?}");
-        
+        let remote = session.req_header().uri.authority();
+        // println!("remote addr {remote:?}");
+        info!("remote addr {} ", remote.unwrap());
+
         let addr = if session.req_header().uri.path().starts_with("/family") {
             ("44.193.104.184", 443)
         } else {
@@ -57,6 +58,8 @@ impl ProxyHttp for MyGateway {
         };
 
         info!("connecting to {addr:?}");
+        println!("connecting to {addr:?}");
+
         let peer = Box::new(HttpPeer::new(addr, true, "httpbin.org".to_string()));
         Ok(peer)
     }
