@@ -10,10 +10,18 @@ prometheus = "0"
 async-trait="0.1"
 # pingora = { version = "0.1", features = [ "lb", "proxy" ] }
 pingora ={ git = "https://github.com/escoffier/pingora", branch = "main" }
-pingora-http = { version = "0.1.1" }
+# pingora-http = { version = "0.1.1" }
+pingora-http = { git = "https://github.com/escoffier/pingora", branch = "main" }
 # pingora-core = { version = "0.1.1", default-features = false }
-pingora-core = { git = "https://github.com/escoffier/pingora", branch = "main"  }
-pingora-proxy = { version = "0.1.1" }
-log = {}
+pingora-core = { git = "https://github.com/escoffier/pingora", branch = "main" }
+# pingora-proxy = { version = "0.1.1" }
+pingora-proxy = { git = "https://github.com/escoffier/pingora", branch = "main" }
+# log = {}
+libc = "0.2"
+log = "0.4"
+netns-rs = "0.1"
+nix = { version = "0.28", features = ["socket", "sched", "uio", "fs", "ioctl", "user", "net", "mount"] }
 env_logger = "0.9"
 structopt = "0.3"
+anyhow = "1.0"
+tracing = { version = "0.1"}

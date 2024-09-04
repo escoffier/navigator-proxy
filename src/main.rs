@@ -1,9 +1,10 @@
 use async_trait::async_trait;
 use log::info;
+use navigator_proxy::inpod::{self, netns::InpodNetns};
+use nix::unistd::Pid;
 use pingora::listeners::TcpSocketOptions;
 use prometheus::register_int_counter;
 use structopt::StructOpt;
-
 
 use pingora_core::server::configuration::Opt;
 use pingora_core::server::Server;
@@ -27,8 +28,9 @@ impl ProxyHttp for MyGateway {
     fn new_ctx(&self) -> Self::CTX {}
 
     async fn request_filter(&self, session: &mut Session, _ctx: &mut Self::CTX) -> Result<bool> {
-        if session.req_header().uri.path().starts_with("/login") 
-        && !check_login(session.req_header()) {
+        if session.req_header().uri.path().starts_with("/login")
+            && !check_login(session.req_header())
+        {
             let _ = session.respond_error(403).await;
             return Ok(true);
         }
@@ -41,9 +43,9 @@ impl ProxyHttp for MyGateway {
         ctx: &mut Self::CTX,
     ) -> Result<Box<HttpPeer>> {
         let addr = if session.req_header().uri.path().starts_with("/family") {
-            ("52.86.144.209", 443)
+            ("44.193.104.184", 443)
         } else {
-            ("52.86.144.209", 443)
+            ("44.193.104.184", 443)
         };
         info!("connecting to {addr:?}");
         let peer = Box::new(HttpPeer::new(addr, true, "httpbin.org".to_string()));
@@ -89,11 +91,13 @@ impl ProxyHttp for MyGateway {
 fn main() {
     env_logger::init();
 
-        // read command line arguments
+    // read command line arguments
+    let podns = inpod::new_inpod_netns(Pid::from_raw(8888)).unwrap();
+    let _ = podns.run(|| {
         let opt = Opt::from_args();
         let mut my_server = Server::new(Some(opt)).unwrap();
         my_server.bootstrap();
-    
+
         let mut my_proxy = pingora_proxy::http_proxy_service(
             &my_server.configuration,
             MyGateway {
@@ -101,19 +105,23 @@ fn main() {
             },
         );
         // my_proxy.add_tcp("0.0.0.0:6191");
-        my_proxy.add_tcp_with_settings("0.0.0.0:6191", TcpSocketOptions{
-            ipv6_only: false,
-            tp_proxy: true
-        });
+        my_proxy.add_tcp_with_settings(
+            "0.0.0.0:6191",
+            TcpSocketOptions {
+                ipv6_only: false,
+                tp_proxy: true,
+            },
+        );
 
         my_server.add_service(my_proxy);
-    
+
         let mut prometheus_service_http =
             pingora_core::services::listening::Service::prometheus_http_service();
         prometheus_service_http.add_tcp("127.0.0.1:6192");
         my_server.add_service(prometheus_service_http);
-    
+
         my_server.run_forever();
+    });
 
     println!("Hello, world!");
 }
