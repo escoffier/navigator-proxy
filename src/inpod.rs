@@ -29,9 +29,18 @@ fn new_netns(pid:Pid) -> OwnedFd {
 
 
 pub fn new_inpod_netns(pid:Pid) -> std::io::Result<InpodNetns> {
-    let cur_netns: OwnedFd = InpodNetns::current().unwrap();
+    let cur_netns: OwnedFd = InpodNetns::current()?;
 
     let workload_netns  = new_netns(pid);
+
+    // let cur_netns = InpodNetns::current();
+    // match cur_netns {
+    //     Ok(cur_netns) => {
+    //         let netns = InpodNetns::new(Arc::new(cur_netns) , workload_netns);
+    //         netns.map(|n | n.into())
+    //     },
+    //     Err(err) => todo!(),
+    // }
 
 
     let netns = InpodNetns::new(Arc::new(cur_netns) , workload_netns);

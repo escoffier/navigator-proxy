@@ -9,13 +9,13 @@ edition = "2021"
 prometheus = "0"
 async-trait="0.1"
 # pingora = { version = "0.1", features = [ "lb", "proxy" ] }
-pingora ={ git = "https://github.com/escoffier/pingora", branch = "main" }
+# pingora ={ git = "https://github.com/escoffier/pingora", branch = "main" }
 # pingora-http = { version = "0.1.1" }
-pingora-http = { git = "https://github.com/escoffier/pingora", branch = "main" }
+pingora-http = { git = "https://github.com/escoffier/pingora", branch = "netns" }
 # pingora-core = { version = "0.1.1", default-features = false }
-pingora-core = { git = "https://github.com/escoffier/pingora", branch = "main" }
+pingora-core = { git = "https://github.com/escoffier/pingora", branch = "netns" }
 # pingora-proxy = { version = "0.1.1" }
-pingora-proxy = { git = "https://github.com/escoffier/pingora", branch = "main" }
+pingora-proxy = { git = "https://github.com/escoffier/pingora", branch = "netns" }
 # log = {}
 libc = "0.2"
 log = "0.4"

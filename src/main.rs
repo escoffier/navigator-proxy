@@ -2,7 +2,7 @@ use async_trait::async_trait;
 use log::info;
 use navigator_proxy::inpod::{self, netns::InpodNetns};
 use nix::unistd::Pid;
-use pingora::listeners::TcpSocketOptions;
+use pingora_core::listeners::TcpSocketOptions;
 use prometheus::register_int_counter;
 use structopt::StructOpt;
 
