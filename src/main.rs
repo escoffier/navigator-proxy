@@ -31,9 +31,9 @@ impl ProxyHttp for MyGateway {
         let client_addr = session.downstream_session.client_addr().unwrap();
         println!("down stream {client_addr:?}");
 
-        let authority = session.req_header();
+        let host = session.req_header().uri.host();
 
-        println!("header {authority:?}");
+        println!("header {host:?}");
         if session.req_header().uri.path().starts_with("/login")
             && !check_login(session.req_header())
         {
@@ -53,9 +53,9 @@ impl ProxyHttp for MyGateway {
 
         println!("down stream {client_addr:?}");
 
-        let remote = session.req_header().uri.authority().unwrap();
+        let authority = session.req_header().uri.authority();
         // println!("remote addr {remote:?}");
-        println!("remote addr {remote}");
+        println!("remote addr {authority:?}");
 
         let addr = if session.req_header().uri.path().starts_with("/family") {
             ("44.193.104.184", 443)
