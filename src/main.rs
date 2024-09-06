@@ -28,6 +28,8 @@ impl ProxyHttp for MyGateway {
     fn new_ctx(&self) -> Self::CTX {}
 
     async fn request_filter(&self, session: &mut Session, _ctx: &mut Self::CTX) -> Result<bool> {
+        let client_addr = session.downstream_session.client_addr().unwrap();
+        println!("down stream {client_addr:?}");
         if session.req_header().uri.path().starts_with("/login")
             && !check_login(session.req_header())
         {
