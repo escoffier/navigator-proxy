@@ -31,9 +31,9 @@ impl ProxyHttp for MyGateway {
         let client_addr = session.downstream_session.client_addr().unwrap();
         println!("down stream {client_addr:?}");
 
-        let host = session.req_header().uri.host();
+        let uri = session.req_header().uri.to_string();
 
-        println!("header {host:?}");
+        println!("header {uri:?}");
         if session.req_header().uri.path().starts_with("/login")
             && !check_login(session.req_header())
         {
