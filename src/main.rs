@@ -2,7 +2,7 @@ use async_trait::async_trait;
 use log::info;
 use navigator_proxy::inpod::{self, netns::InpodNetns};
 use nix::unistd::Pid;
-use pingora_core::listeners::TcpSocketOptions;
+use pingora::listeners::TcpSocketOptions;
 use prometheus::register_int_counter;
 use structopt::StructOpt;
 
@@ -103,7 +103,7 @@ impl ProxyHttp for MyGateway {
 fn main() {
     env_logger::init();
 
-    let opt = Opt::from_args();
+    let opt = Opt::parse_args();
 
     // read command line arguments
     let podns = inpod::new_inpod_netns(Pid::from_raw(3678871)).unwrap();
@@ -117,13 +117,13 @@ fn main() {
                 req_metric: register_int_counter!("reg_counter", "Number of requests").unwrap(),
             },
         );
+        let mut options = TcpSocketOptions::default();
+        options.tp_proxy = Some(true);
+        options.mark = Some(1337);
         // my_proxy.add_tcp("0.0.0.0:6191");
         my_proxy.add_tcp_with_settings(
             "0.0.0.0:6191",
-            TcpSocketOptions {
-                ipv6_only: false,
-                tp_proxy: true,
-            },
+            options,
         );
 
         my_server.add_service(my_proxy);
