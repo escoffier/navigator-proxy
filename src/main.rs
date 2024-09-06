@@ -33,7 +33,7 @@ impl ProxyHttp for MyGateway {
 
         let authority = session.req_header().uri.authority();
 
-        println!("authority {authority:?}");
+        println!("header {session.req_header():?}");
         if session.req_header().uri.path().starts_with("/login")
             && !check_login(session.req_header())
         {
