@@ -48,10 +48,14 @@ impl ProxyHttp for MyGateway {
         session: &mut Session,
         ctx: &mut Self::CTX,
     ) -> Result<Box<HttpPeer>> {
-        let client_addr = session.downstream_session.client_addr().unwrap();
-        println!("Hello, world!");
+        let client_addr: &pingora::protocols::l4::socket::SocketAddr = session.downstream_session.client_addr().unwrap();
 
         println!("down stream {client_addr:?}");
+        
+        
+        let server_addr = session.downstream_session.server_addr();
+
+        info!("server addr {server_addr:?}");
 
         let authority = session.req_header().uri.authority();
         // println!("remote addr {remote:?}");
