@@ -2,7 +2,7 @@ use async_trait::async_trait;
 use log::info;
 use navigator_proxy::inpod::{self, netns::InpodNetns};
 use nix::unistd::Pid;
-use pingora::listeners::TcpSocketOptions;
+use pingora::{listeners::TcpSocketOptions, upstreams::peer::Peer};
 use prometheus::register_int_counter;
 use structopt::StructOpt;
 
@@ -70,7 +70,10 @@ impl ProxyHttp for MyGateway {
         info!("connecting to {addr:?}");
         println!("connecting to {addr:?}");
 
-        let peer = Box::new(HttpPeer::new(addr, true, "httpbin.org".to_string()));
+        let mut  peer = Box::new(HttpPeer::new(addr, true, "httpbin.org".to_string()));
+        let options = peer.get_mut_peer_options();
+        options.map(|o| {o.dscp = Some(6); o});
+        info!("peer options {peer:?}");
         Ok(peer)
     }
 
