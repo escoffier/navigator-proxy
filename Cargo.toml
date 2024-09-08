@@ -9,13 +9,17 @@ edition = "2021"
 prometheus = "0"
 async-trait="0.1"
 # pingora = { version = "0.3", features = [ "lb", "proxy" ] }
-pingora ={ git = "https://github.com/escoffier/pingora", branch = "netns1" }
+# pingora ={ git = "https://github.com/escoffier/pingora", branch = "netns1" }
+pingora ={ git = "https://github.com/escoffier/pingora", rev = "a2ddcaf2a64834dcc59b632f27c8a21608f6c63e" }
 # pingora-http = { version = "0.3.0" }
-pingora-http = { git = "https://github.com/escoffier/pingora", branch = "netns1" }
+# pingora-http = { git = "https://github.com/escoffier/pingora", branch = "netns1" }
+pingora-http = { git = "https://github.com/escoffier/pingora", rev = "a2ddcaf2a64834dcc59b632f27c8a21608f6c63e" }
 #  pingora-core = { version = "0.3.0", default-features = false }
-pingora-core = { git = "https://github.com/escoffier/pingora", branch = "netns1" }
+# pingora-core = { git = "https://github.com/escoffier/pingora", branch = "netns1" }
+pingora-core = { git = "https://github.com/escoffier/pingora", rev = "a2ddcaf2a64834dcc59b632f27c8a21608f6c63e" }
 # pingora-proxy = { version = "0.3.0" }
-pingora-proxy = { git = "https://github.com/escoffier/pingora", branch = "netns1" }
+# pingora-proxy = { git = "https://github.com/escoffier/pingora", branch = "netns1" }
+pingora-proxy = { git = "https://github.com/escoffier/pingora", rev = "a2ddcaf2a64834dcc59b632f27c8a21608f6c63e" }
 # log = {}
 libc = "0.2"
 log = "0.4"

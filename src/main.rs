@@ -72,7 +72,7 @@ impl ProxyHttp for MyGateway {
 
         let mut  peer = Box::new(HttpPeer::new(addr, true, "httpbin.org".to_string()));
         let options = peer.get_mut_peer_options();
-        options.map(|o| {o.dscp = Some(6); o});
+        options.map(|o| {o.mark = Some(1337); o});
         info!("peer options {peer:?}");
         Ok(peer)
     }
