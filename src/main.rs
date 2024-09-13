@@ -139,7 +139,8 @@ fn main() {
             options,
         );
 
-        my_server.add_service(my_proxy);
+        // my_server.add_service(my_proxy);
+        my_server.run_service1(my_proxy);
 
         let mut prometheus_service_http =
             pingora_core::services::listening::Service::prometheus_http_service();
