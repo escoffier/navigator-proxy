@@ -48,11 +48,11 @@ impl ProxyHttp for MyGateway {
         session: &mut Session,
         ctx: &mut Self::CTX,
     ) -> Result<Box<HttpPeer>> {
-        let client_addr: &pingora::protocols::l4::socket::SocketAddr = session.downstream_session.client_addr().unwrap();
+        let client_addr: &pingora::protocols::l4::socket::SocketAddr =
+            session.downstream_session.client_addr().unwrap();
 
         println!("down stream {client_addr:?}");
-        
-        
+
         let server_addr = session.downstream_session.server_addr();
 
         info!("server addr {server_addr:?}");
@@ -70,9 +70,12 @@ impl ProxyHttp for MyGateway {
         info!("connecting to {addr:?}");
         println!("connecting to {addr:?}");
 
-        let mut  peer = Box::new(HttpPeer::new(addr, true, "httpbin.org".to_string()));
+        let mut peer = Box::new(HttpPeer::new(addr, true, "httpbin.org".to_string()));
         let options = peer.get_mut_peer_options();
-        options.map(|o| {o.mark = Some(1337); o});
+        options.map(|o| {
+            o.mark = Some(1337);
+            o
+        });
         info!("peer options {peer:?}");
         Ok(peer)
     }
@@ -118,10 +121,10 @@ fn main() {
 
     let opt = Opt::parse_args();
 
+    let mut my_server = Server::new(Some(opt)).unwrap();
     // read command line arguments
     let podns = inpod::new_inpod_netns(Pid::from_raw(3860141)).unwrap();
     let _ = podns.run(|| {
-        let mut my_server = Server::new(Some(opt)).unwrap();
         my_server.bootstrap();
 
         let mut my_proxy = pingora_proxy::http_proxy_service(
@@ -134,21 +137,17 @@ fn main() {
         options.tp_proxy = Some(true);
         options.mark = Some(1337);
         // my_proxy.add_tcp("0.0.0.0:6191");
-        my_proxy.add_tcp_with_settings(
-            "0.0.0.0:6191",
-            options,
-        );
+        my_proxy.add_tcp_with_settings("0.0.0.0:6191", options);
 
         // my_server.add_service(my_proxy);
         my_server.run_service1(my_proxy);
-
-        let mut prometheus_service_http =
-            pingora_core::services::listening::Service::prometheus_http_service();
-        prometheus_service_http.add_tcp("127.0.0.1:6192");
-        my_server.add_service(prometheus_service_http);
-
-        my_server.run_forever();
     });
 
+    let mut prometheus_service_http =
+        pingora_core::services::listening::Service::prometheus_http_service();
+    prometheus_service_http.add_tcp("127.0.0.1:6192");
+    my_server.add_service(prometheus_service_http);
+
+    my_server.run_forever();
     println!("Hello, world!");
 }
