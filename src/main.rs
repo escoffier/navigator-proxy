@@ -126,6 +126,7 @@ fn main() {
     let vec = vec![3860141, 1165];
     // read command line arguments
     for pid in vec {
+        info!("pid {pid:?}");
         let podns = inpod::new_inpod_netns(Pid::from_raw(pid)).unwrap();
         let _ = podns.run(|| {
             let mut owned_string: String = "reg_counter_".to_owned();
