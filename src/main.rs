@@ -122,26 +122,29 @@ fn main() {
     let opt = Opt::parse_args();
 
     let mut my_server = Server::new(Some(opt)).unwrap();
+    let vec = vec![3860141, 1165];
     // read command line arguments
-    let podns = inpod::new_inpod_netns(Pid::from_raw(3860141)).unwrap();
-    let _ = podns.run(|| {
-        my_server.bootstrap();
-
-        let mut my_proxy = pingora_proxy::http_proxy_service(
-            &my_server.configuration,
-            MyGateway {
-                req_metric: register_int_counter!("reg_counter", "Number of requests").unwrap(),
-            },
-        );
-        let mut options = TcpSocketOptions::default();
-        options.tp_proxy = Some(true);
-        options.mark = Some(1337);
-        // my_proxy.add_tcp("0.0.0.0:6191");
-        my_proxy.add_tcp_with_settings("0.0.0.0:6191", options);
-
-        // my_server.add_service(my_proxy);
-        my_server.run_service1(my_proxy);
-    });
+    for pid in vec {
+        let podns = inpod::new_inpod_netns(Pid::from_raw(pid)).unwrap();
+        let _ = podns.run(|| {
+            my_server.bootstrap();
+    
+            let mut my_proxy = pingora_proxy::http_proxy_service(
+                &my_server.configuration,
+                MyGateway {
+                    req_metric: register_int_counter!("reg_counter", "Number of requests").unwrap(),
+                },
+            );
+            let mut options = TcpSocketOptions::default();
+            options.tp_proxy = Some(true);
+            options.mark = Some(1337);
+            // my_proxy.add_tcp("0.0.0.0:6191");
+            my_proxy.add_tcp_with_settings("0.0.0.0:6191", options);
+    
+            // my_server.add_service(my_proxy);
+            my_server.run_service1(my_proxy);
+        });
+    }
 
     let mut prometheus_service_http =
         pingora_core::services::listening::Service::prometheus_http_service();
