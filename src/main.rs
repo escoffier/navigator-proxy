@@ -122,13 +122,12 @@ fn main() {
     let opt = Opt::parse_args();
 
     let mut my_server = Server::new(Some(opt)).unwrap();
+    my_server.bootstrap();
     let vec = vec![3860141, 1165];
     // read command line arguments
     for pid in vec {
         let podns = inpod::new_inpod_netns(Pid::from_raw(pid)).unwrap();
         let _ = podns.run(|| {
-            my_server.bootstrap();
-    
             let mut my_proxy = pingora_proxy::http_proxy_service(
                 &my_server.configuration,
                 MyGateway {
