@@ -128,7 +128,7 @@ fn main() {
     for pid in vec {
         let podns = inpod::new_inpod_netns(Pid::from_raw(pid)).unwrap();
         let _ = podns.run(|| {
-            let mut owned_string: String = "reg_counter_ ".to_owned();
+            let mut owned_string: String = "reg_counter_".to_owned();
             let pid_str = pid.to_string();
             owned_string.push_str(&pid_str);
             let mut my_proxy = pingora_proxy::http_proxy_service(
