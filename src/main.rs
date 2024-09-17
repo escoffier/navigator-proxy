@@ -131,6 +131,8 @@ fn main() {
     for pid in vec {
         info!("pid {pid:?}");
         let podns = inpod::new_inpod_netns(Pid::from_raw(pid)).unwrap();
+        info!("workload_netns_id: {:?}", podns.workload_netns_id());
+
         let _ = podns.run(|| {
             let mut owned_string: String = "reg_counter_".to_owned();
             let pid_str = pid.to_string();
