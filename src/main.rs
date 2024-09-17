@@ -173,10 +173,10 @@ fn main() {
         });
     }
 
-    let mut prometheus_service_http =
-        pingora_core::services::listening::Service::prometheus_http_service();
-    prometheus_service_http.add_tcp("127.0.0.1:6192");
-    my_server.add_service(prometheus_service_http);
+    // let mut prometheus_service_http =
+    //     pingora_core::services::listening::Service::prometheus_http_service();
+    // prometheus_service_http.add_tcp("127.0.0.1:6192");
+    // my_server.add_service(prometheus_service_http);
 
     my_server.run_forever();
 }
