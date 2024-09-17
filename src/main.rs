@@ -12,6 +12,7 @@ use pingora_core::upstreams::peer::HttpPeer;
 use pingora_core::Result;
 use pingora_http::ResponseHeader;
 use pingora_proxy::{ProxyHttp, Session};
+use std::{thread, time};
 
 fn check_login(req: &pingora_http::RequestHeader) -> bool {
     // implement you logic check logic here
@@ -146,6 +147,8 @@ fn main() {
     
             // my_server.add_service(my_proxy);
             my_server.run_service1(my_proxy);
+            let ten_millis = time::Duration::from_secs(2);
+            thread::sleep(ten_millis);
         });
     }
 
