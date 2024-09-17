@@ -18,6 +18,7 @@ use std::os::unix::io::AsRawFd;
 use std::sync::Arc;
 use std::time::Instant;
 use tracing::debug;
+use log::info;
 
 #[derive(Debug, Clone, Copy, Eq, Hash, PartialEq)]
 pub struct NetnsID {
@@ -83,8 +84,10 @@ impl InpodNetns {
     {
         setns(&self.inner.netns, CloneFlags::CLONE_NEWNET)
             .map_err(|e| std::io::Error::from_raw_os_error(e as i32))?;
+        info!("netns: {}", self.inner.netns.as_raw_fd());
         let ret = f();
         setns(&self.inner.cur_netns, CloneFlags::CLONE_NEWNET).expect("this must never fail");
+        info!("cur_netns: {}", self.inner.cur_netns.as_raw_fd());
         Ok(ret)
     }
 }
