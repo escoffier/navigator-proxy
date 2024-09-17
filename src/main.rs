@@ -12,7 +12,7 @@ use pingora_core::upstreams::peer::HttpPeer;
 use pingora_core::Result;
 use pingora_http::ResponseHeader;
 use pingora_proxy::{ProxyHttp, Session};
-use std::{thread, time};
+use std::{process::Command, thread, time::{self, Instant}};
 
 fn check_login(req: &pingora_http::RequestHeader) -> bool {
     // implement you logic check logic here
@@ -134,9 +134,26 @@ fn main() {
         info!("workload_netns_id: {:?}", podns.workload_netns_id());
 
         let _ = podns.run(|| {
+
+            let now = Instant::now();
+            let output = Command::new("sh").arg("-c").arg("ip a").output().unwrap();
+            info!(
+                "command complete in {:?}; code={}, stdout={}, stderr={}",
+                now.elapsed(),
+                output.status,
+                std::str::from_utf8(&output.stdout).unwrap(),
+                std::str::from_utf8(&output.stderr).unwrap()
+            );
+            
             let mut owned_string: String = "reg_counter_".to_owned();
             let pid_str = pid.to_string();
             owned_string.push_str(&pid_str);
+
+            // let mut proxy: pingora_proxy::HttpProxy<_> = pingora_proxy::HttpProxy::new(inner, conf.clone());
+            // proxy.handle_init_modules();
+            // Service::new(name.to_string(), proxy)
+
+
             let mut my_proxy = pingora_proxy::http_proxy_service(
                 &my_server.configuration,
                 MyGateway {
