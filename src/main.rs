@@ -124,7 +124,7 @@ fn main() {
 
     let mut my_server = Server::new(Some(opt)).unwrap();
     my_server.bootstrap();
-    let vec = vec![3860141, 1165,1165];
+    let vec = vec![1165, 3860141];
     // let vec = vec![1165];
 
     // read command line arguments
