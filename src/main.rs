@@ -147,7 +147,7 @@ fn main() {
             // my_proxy.add_tcp("0.0.0.0:6191");
             my_proxy.add_tcp_with_settings("0.0.0.0:6191", options);
 
-            // my_server.add_service(my_proxy);
+            my_server.add_service(my_proxy);
             my_server.run_service1(my_proxy);
             let ten_millis = time::Duration::from_secs(2);
             thread::sleep(ten_millis);
