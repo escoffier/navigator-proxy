@@ -124,7 +124,9 @@ fn main() {
 
     let mut my_server = Server::new(Some(opt)).unwrap();
     my_server.bootstrap();
-    let vec = vec![3860141, 1165];
+    // let vec = vec![3860141, 1165];
+    let vec = vec![1165];
+
     // read command line arguments
     for pid in vec {
         info!("pid {pid:?}");
@@ -144,7 +146,7 @@ fn main() {
             options.mark = Some(1337);
             // my_proxy.add_tcp("0.0.0.0:6191");
             my_proxy.add_tcp_with_settings("0.0.0.0:6191", options);
-    
+
             // my_server.add_service(my_proxy);
             my_server.run_service1(my_proxy);
             let ten_millis = time::Duration::from_secs(2);
