@@ -1,4 +1,5 @@
 use async_trait::async_trait;
+// use libc::sleep;
 use log::info;
 use navigator_proxy::inpod::{self, netns::InpodNetns};
 use nix::unistd::Pid;
@@ -14,6 +15,7 @@ use pingora_proxy::{ProxyHttp, Session};
 use std::{process::Command, thread, time::{self, Instant}};
 use tokio::net::TcpListener;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
+use tokio::time::{sleep, Duration};
 
 fn check_login(req: &pingora_http::RequestHeader) -> bool {
     // implement you logic check logic here
@@ -172,9 +174,8 @@ async fn main() {
             for mut listener in listeners { 
                 tokio::spawn(async move {
                     listener.listen().await.unwrap();
-                    info!("create listener for :6191")
+                    info!("create listener for :6191");
                 });
-                
             }
             // let mut listener = ListenerEndpoint::new(ServerAddress::Tcp(addr.into(), None));
 
@@ -189,10 +190,12 @@ async fn main() {
         });
     }
 
+    sleep(Duration::from_secs(100)).await;
+
     // let mut prometheus_service_http =
     //     pingora_core::services::listening::Service::prometheus_http_service();
     // prometheus_service_http.add_tcp("127.0.0.1:6192");
     // my_server.add_service(prometheus_service_http);
 
-    my_server.run_forever();
+    // my_server.run_forever();
 }
