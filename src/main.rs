@@ -119,8 +119,8 @@ impl ProxyHttp for MyGateway {
     }
 }
 
-// #[tokio::main]
-fn main() {
+#[tokio::main]
+async fn main() {
     env_logger::init();
 
     let opt = Opt::parse_args();
