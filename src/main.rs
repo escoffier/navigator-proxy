@@ -3,18 +3,25 @@ use async_trait::async_trait;
 use log::info;
 use navigator_proxy::inpod::{self, netns::InpodNetns};
 use nix::unistd::Pid;
-use pingora::{listeners::{ServerAddress, TcpSocketOptions, Listeners}, upstreams::peer::Peer};
-use prometheus::register_int_counter;
-use structopt::StructOpt;
+use pingora::{
+    listeners::{Listeners, ServerAddress, TcpSocketOptions},
+    upstreams::peer::Peer,
+};
 use pingora_core::server::configuration::Opt;
 use pingora_core::server::Server;
 use pingora_core::upstreams::peer::HttpPeer;
 use pingora_core::Result;
 use pingora_http::ResponseHeader;
 use pingora_proxy::{ProxyHttp, Session};
-use std::{process::Command, thread, time::{self, Instant}};
-use tokio::net::TcpListener;
+use prometheus::register_int_counter;
+use std::{
+    process::Command,
+    thread,
+    time::{self, Instant},
+};
+use structopt::StructOpt;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
+use tokio::net::TcpListener;
 use tokio::time::{sleep, Duration};
 
 fn check_login(req: &pingora_http::RequestHeader) -> bool {
@@ -148,7 +155,7 @@ async fn main() {
                 std::str::from_utf8(&output.stdout).unwrap(),
                 std::str::from_utf8(&output.stderr).unwrap()
             );
-            
+
             let mut owned_string: String = "reg_counter_".to_owned();
             let pid_str = pid.to_string();
             owned_string.push_str(&pid_str);
@@ -156,7 +163,6 @@ async fn main() {
             // let mut proxy: pingora_proxy::HttpProxy<_> = pingora_proxy::HttpProxy::new(inner, conf.clone());
             // proxy.handle_init_modules();
             // Service::new(name.to_string(), proxy)
-
 
             let mut my_proxy = pingora_proxy::http_proxy_service(
                 &my_server.configuration,
@@ -171,14 +177,15 @@ async fn main() {
             // let l4 = ServerAddress::Tcp(String::from("0.0.0.0:6191"), Some(options));
             let mut listeners = Listeners::tcp(&String::from("0.0.0.0:15006"));
             let listeners = listeners.build(None);
-            for mut listener in listeners { 
+            for mut listener in listeners {
                 tokio::spawn(async move {
                     listener.listen().await.unwrap();
                     info!("create listener for :15006");
+                    let stream = listener.accept().await.unwrap();
+                    stream.handshake().await.unwrap();
                 });
             }
             // let mut listener = ListenerEndpoint::new(ServerAddress::Tcp(addr.into(), None));
-
 
             // my_proxy.add_tcp("0.0.0.0:6191");
             my_proxy.add_tcp_with_settings("0.0.0.0:6191", options);
