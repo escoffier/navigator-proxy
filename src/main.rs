@@ -2,10 +2,9 @@ use async_trait::async_trait;
 use log::info;
 use navigator_proxy::inpod::{self, netns::InpodNetns};
 use nix::unistd::Pid;
-use pingora::{listeners::TcpSocketOptions, upstreams::peer::Peer};
+use pingora::{listeners::{ServerAddress, TcpSocketOptions, Listeners}, upstreams::peer::Peer};
 use prometheus::register_int_counter;
 use structopt::StructOpt;
-
 use pingora_core::server::configuration::Opt;
 use pingora_core::server::Server;
 use pingora_core::upstreams::peer::HttpPeer;
@@ -13,6 +12,8 @@ use pingora_core::Result;
 use pingora_http::ResponseHeader;
 use pingora_proxy::{ProxyHttp, Session};
 use std::{process::Command, thread, time::{self, Instant}};
+use tokio::net::TcpListener;
+use tokio::io::{AsyncReadExt, AsyncWriteExt};
 
 fn check_login(req: &pingora_http::RequestHeader) -> bool {
     // implement you logic check logic here
@@ -117,6 +118,8 @@ impl ProxyHttp for MyGateway {
         self.req_metric.inc();
     }
 }
+
+// #[tokio::main]
 fn main() {
     env_logger::init();
 
@@ -134,7 +137,6 @@ fn main() {
         info!("workload_netns_id: {:?}", podns.workload_netns_id());
 
         let _ = podns.run(|| {
-
             let now = Instant::now();
             let output = Command::new("sh").arg("-c").arg("ip a").output().unwrap();
             info!(
@@ -163,6 +165,20 @@ fn main() {
             let mut options = TcpSocketOptions::default();
             options.tp_proxy = Some(true);
             options.mark = Some(1337);
+
+            // let l4 = ServerAddress::Tcp(String::from("0.0.0.0:6191"), Some(options));
+            let mut listeners = Listeners::tcp(&String::from("0.0.0.0:6191"));
+            let listeners = listeners.build(None);
+            for mut listener in listeners { 
+                tokio::spawn(async move {
+                    listener.listen().await.unwrap();
+                    info!("create listener for :6191")
+                });
+                
+            }
+            // let mut listener = ListenerEndpoint::new(ServerAddress::Tcp(addr.into(), None));
+
+
             // my_proxy.add_tcp("0.0.0.0:6191");
             my_proxy.add_tcp_with_settings("0.0.0.0:6191", options);
 

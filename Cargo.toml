@@ -10,19 +10,19 @@ prometheus = "0"
 async-trait="0.1"
 # pingora = { version = "0.3", features = [ "lb", "proxy" ] }
 # pingora ={ git = "https://github.com/escoffier/pingora", branch = "netns1" }
-pingora ={ git = "https://github.com/escoffier/pingora", rev = "f4df95c511301ece04267ef51441e9cc52e7f2b6" }
+pingora ={ git = "https://github.com/escoffier/pingora", rev = "2524181afe6a6dfe019ee610a5ceef904cba429e" }
 # pingora-http = { version = "0.3.0" }
 # pingora-http = { git = "https://github.com/escoffier/pingora", branch = "netns1" }
-pingora-http = { git = "https://github.com/escoffier/pingora", rev = "f4df95c511301ece04267ef51441e9cc52e7f2b6" }
+pingora-http = { git = "https://github.com/escoffier/pingora", rev = "2524181afe6a6dfe019ee610a5ceef904cba429e" }
 #  pingora-core = { version = "0.3.0", default-features = false }
 # pingora-core = { git = "https://github.com/escoffier/pingora", branch = "netns1" }
-pingora-core = { git = "https://github.com/escoffier/pingora", rev = "f4df95c511301ece04267ef51441e9cc52e7f2b6" }
+pingora-core = { git = "https://github.com/escoffier/pingora", rev = "2524181afe6a6dfe019ee610a5ceef904cba429e" }
 # pingora-proxy = { version = "0.3.0" }
 # pingora-proxy = { git = "https://github.com/escoffier/pingora", branch = "netns1" }
-pingora-proxy = { git = "https://github.com/escoffier/pingora", rev = "f4df95c511301ece04267ef51441e9cc52e7f2b6" }
-# pingora-runtime = { git = "https://github.com/escoffier/pingora", rev = "f4df95c511301ece04267ef51441e9cc52e7f2b6" }
-# pingora-timeout = { git = "https://github.com/escoffier/pingora", rev = "f4df95c511301ece04267ef51441e9cc52e7f2b6" }
-# pingora-error = { git = "https://github.com/escoffier/pingora", rev = "f4df95c511301ece04267ef51441e9cc52e7f2b6" }
+pingora-proxy = { git = "https://github.com/escoffier/pingora", rev = "2524181afe6a6dfe019ee610a5ceef904cba429e" }
+# pingora-runtime = { git = "https://github.com/escoffier/pingora", rev = "2524181afe6a6dfe019ee610a5ceef904cba429e" }
+# pingora-timeout = { git = "https://github.com/escoffier/pingora", rev = "2524181afe6a6dfe019ee610a5ceef904cba429e" }
+# pingora-error = { git = "https://github.com/escoffier/pingora", rev = "2524181afe6a6dfe019ee610a5ceef904cba429e" }
 # log = {}
 libc = "0.2"
 log = "0.4"
@@ -32,7 +32,7 @@ env_logger = "0.9"
 structopt = "0.3"
 anyhow = "1.0"
 tracing = { version = "0.1"}
-# tokio = "1"
+tokio = "1"
 # sentry = { version = "0.26", features = [
 #     "backtrace",
 #     "contexts",
