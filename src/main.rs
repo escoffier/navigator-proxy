@@ -178,12 +178,13 @@ async fn main() {
             let mut listeners = Listeners::tcp(&String::from("0.0.0.0:15006"));
             let listeners = listeners.build(None);
             for mut listener in listeners {
-                tokio::spawn(async move {
-                    listener.listen().await.unwrap();
-                    info!("create listener for :15006");
-                    let stream = listener.accept().await.unwrap();
-                    stream.handshake().await.unwrap();
-                });
+                let _l = listener.listen();
+                // tokio::spawn(async move {
+                //     listener.listen().await.unwrap();
+                //     info!("create listener for :15006");
+                //     let stream = listener.accept().await.unwrap();
+                //     stream.handshake().await.unwrap();
+                // });
             }
             // let mut listener = ListenerEndpoint::new(ServerAddress::Tcp(addr.into(), None));
 
