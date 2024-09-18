@@ -169,12 +169,12 @@ async fn main() {
             options.mark = Some(1337);
 
             // let l4 = ServerAddress::Tcp(String::from("0.0.0.0:6191"), Some(options));
-            let mut listeners = Listeners::tcp(&String::from("0.0.0.0:6191"));
+            let mut listeners = Listeners::tcp(&String::from("0.0.0.0:15006"));
             let listeners = listeners.build(None);
             for mut listener in listeners { 
                 tokio::spawn(async move {
                     listener.listen().await.unwrap();
-                    info!("create listener for :6191");
+                    info!("create listener for :15006");
                 });
             }
             // let mut listener = ListenerEndpoint::new(ServerAddress::Tcp(addr.into(), None));
@@ -190,7 +190,7 @@ async fn main() {
         });
     }
 
-    sleep(Duration::from_secs(100)).await;
+    sleep(Duration::from_secs(200)).await;
 
     // let mut prometheus_service_http =
     //     pingora_core::services::listening::Service::prometheus_http_service();
