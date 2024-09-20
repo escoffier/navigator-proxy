@@ -4,7 +4,7 @@ use log::info;
 use navigator_proxy::inpod::{self, netns::InpodNetns};
 use nix::unistd::Pid;
 use pingora::{
-    listeners::{Listeners, ServerAddress, TcpSocketOptions},
+    listeners::{self, Listeners, ServerAddress, TcpSocketOptions},
     upstreams::peer::Peer,
 };
 use pingora_core::server::configuration::Opt;
@@ -136,6 +136,7 @@ async fn main() {
     env_logger::init();
 
     let opt = Opt::parse_args();
+    let mut listeners: Vec<TcpListener> = Vec::new();
 
     let mut my_server = Server::new(Some(opt)).unwrap();
     my_server.bootstrap();
@@ -191,7 +192,8 @@ async fn main() {
             // }
             // let mut listener = ListenerEndpoint::new(ServerAddress::Tcp(addr.into(), None));
 
-            let listener = TcpListener::bind("127.0.0.1:15006");
+            let listener = TcpListener::bind("127.0.0.1:15006").unwrap();
+            listeners.push(listener);
 
             // my_proxy.add_tcp("0.0.0.0:6191");
             my_proxy.add_tcp_with_settings("0.0.0.0:6191", options);
