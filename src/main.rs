@@ -21,8 +21,11 @@ use std::{
 };
 use structopt::StructOpt;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
-use tokio::net::TcpListener;
+// use tokio::net::TcpListener;
 use tokio::time::{sleep, Duration};
+
+use std::net::{TcpListener, TcpStream};
+
 
 fn check_login(req: &pingora_http::RequestHeader) -> bool {
     // implement you logic check logic here
@@ -175,18 +178,20 @@ async fn main() {
             options.mark = Some(1337);
 
             // let l4 = ServerAddress::Tcp(String::from("0.0.0.0:6191"), Some(options));
-            let mut listeners = Listeners::tcp(&String::from("0.0.0.0:15006"));
-            let listeners = listeners.build(None);
-            for mut listener in listeners {
-                let _l = listener.listen();
+            // let mut listeners = Listeners::tcp(&String::from("0.0.0.0:15006"));
+            // let listeners = listeners.build(None);
+            // for mut listener in listeners {
+                // let _l = listener.listen();
                 // tokio::spawn(async move {
                 //     listener.listen().await.unwrap();
                 //     info!("create listener for :15006");
                 //     let stream = listener.accept().await.unwrap();
                 //     stream.handshake().await.unwrap();
                 // });
-            }
+            // }
             // let mut listener = ListenerEndpoint::new(ServerAddress::Tcp(addr.into(), None));
+
+            let listener = TcpListener::bind("127.0.0.1:15006");
 
             // my_proxy.add_tcp("0.0.0.0:6191");
             my_proxy.add_tcp_with_settings("0.0.0.0:6191", options);
