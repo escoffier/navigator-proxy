@@ -161,7 +161,10 @@ fn main() {
         let mut options = TcpSocketOptions::default();
         options.tp_proxy = Some(true);
         options.mark = Some(1337);
-        my_proxy.add_ns_tcp_with_settings(podns,"0.0.0.0:6191", options);
+        // my_proxy.add_ns_tcp_with_settings(podns,"0.0.0.0:6191", options);
+
+        my_proxy.add_tcp_with_settings("0.0.0.0:6191", options);
+
 
         // my_server.add_service(my_proxy);
         my_server.run_service1(my_proxy);
