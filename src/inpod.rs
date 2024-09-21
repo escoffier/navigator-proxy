@@ -1,11 +1,11 @@
 // use anyhow::Ok;
-use netns::InpodNetns;
+// use netns::InpodNetns;
 use std::{os::fd::OwnedFd, sync::Arc};
 use nix::unistd::Pid;
 use nix::sched::{setns, CloneFlags};
 use std::result::Result::Ok;
+use pingora_core::listeners::inpod::netns::InpodNetns;
 
-pub mod netns;
 
 fn new_netns(pid:Pid) -> OwnedFd {
     let mut new_netns: Option<OwnedFd> = None;

@@ -1,7 +1,7 @@
 use async_trait::async_trait;
 // use libc::sleep;
 use log::info;
-use navigator_proxy::inpod::{self, netns::InpodNetns};
+use navigator_proxy::inpod::{self};
 use nix::unistd::Pid;
 use pingora::{
     listeners::{self, Listeners, ServerAddress, TcpSocketOptions},
@@ -25,7 +25,6 @@ use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::time::{sleep, Duration};
 
 use std::net::{TcpListener, TcpStream};
-
 
 fn check_login(req: &pingora_http::RequestHeader) -> bool {
     // implement you logic check logic here
@@ -149,6 +148,9 @@ async fn main() {
         let podns = inpod::new_inpod_netns(Pid::from_raw(pid)).unwrap();
         info!("workload_netns_id: {:?}", podns.workload_netns_id());
 
+        let mut owned_string: String = "reg_counter_".to_owned();
+        let pid_str = pid.to_string();
+        owned_string.push_str(&pid_str);
         let mut my_proxy = pingora_proxy::http_proxy_service(
             &my_server.configuration,
             MyGateway {
@@ -156,13 +158,15 @@ async fn main() {
             },
         );
 
+        let mut options = TcpSocketOptions::default();
+        options.tp_proxy = Some(true);
+        options.mark = Some(1337);
         my_proxy.add_tcp_with_settings("0.0.0.0:6191", options);
 
         // my_server.add_service(my_proxy);
         my_server.run_service1(my_proxy);
         let ten_millis = time::Duration::from_secs(2);
         thread::sleep(ten_millis);
-
 
         // let _ = podns.run(|| {
         //     let now = Instant::now();
@@ -178,7 +182,6 @@ async fn main() {
         //     let mut owned_string: String = "reg_counter_".to_owned();
         //     let pid_str = pid.to_string();
         //     owned_string.push_str(&pid_str);
-
 
         //     let mut my_proxy = pingora_proxy::http_proxy_service(
         //         &my_server.configuration,
