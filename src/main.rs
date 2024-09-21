@@ -130,8 +130,8 @@ impl ProxyHttp for MyGateway {
     }
 }
 
-#[tokio::main]
-async fn main() {
+// #[tokio::main]
+fn main() {
     env_logger::init();
 
     let opt = Opt::parse_args();
@@ -206,7 +206,8 @@ async fn main() {
         // });
     }
 
-    sleep(Duration::from_secs(200)).await;
+    thread::sleep( time::Duration::from_secs(200));
+    // sleep(Duration::from_secs(200)).await;
 
     // let mut prometheus_service_http =
     //     pingora_core::services::listening::Service::prometheus_http_service();
