@@ -149,60 +149,58 @@ async fn main() {
         let podns = inpod::new_inpod_netns(Pid::from_raw(pid)).unwrap();
         info!("workload_netns_id: {:?}", podns.workload_netns_id());
 
-        let _ = podns.run(|| {
-            let now = Instant::now();
-            let output = Command::new("sh").arg("-c").arg("ip a").output().unwrap();
-            info!(
-                "command complete in {:?}; code={}, stdout={}, stderr={}",
-                now.elapsed(),
-                output.status,
-                std::str::from_utf8(&output.stdout).unwrap(),
-                std::str::from_utf8(&output.stderr).unwrap()
-            );
+        let mut my_proxy = pingora_proxy::http_proxy_service(
+            &my_server.configuration,
+            MyGateway {
+                req_metric: register_int_counter!(owned_string, "Number of request").unwrap(),
+            },
+        );
 
-            let mut owned_string: String = "reg_counter_".to_owned();
-            let pid_str = pid.to_string();
-            owned_string.push_str(&pid_str);
+        my_proxy.add_tcp_with_settings("0.0.0.0:6191", options);
 
-            // let mut proxy: pingora_proxy::HttpProxy<_> = pingora_proxy::HttpProxy::new(inner, conf.clone());
-            // proxy.handle_init_modules();
-            // Service::new(name.to_string(), proxy)
+        // my_server.add_service(my_proxy);
+        my_server.run_service1(my_proxy);
+        let ten_millis = time::Duration::from_secs(2);
+        thread::sleep(ten_millis);
 
-            let mut my_proxy = pingora_proxy::http_proxy_service(
-                &my_server.configuration,
-                MyGateway {
-                    req_metric: register_int_counter!(owned_string, "Number of request").unwrap(),
-                },
-            );
-            let mut options = TcpSocketOptions::default();
-            options.tp_proxy = Some(true);
-            options.mark = Some(1337);
 
-            // let l4 = ServerAddress::Tcp(String::from("0.0.0.0:6191"), Some(options));
-            // let mut listeners = Listeners::tcp(&String::from("0.0.0.0:15006"));
-            // let listeners = listeners.build(None);
-            // for mut listener in listeners {
-                // let _l = listener.listen();
-                // tokio::spawn(async move {
-                //     listener.listen().await.unwrap();
-                //     info!("create listener for :15006");
-                //     let stream = listener.accept().await.unwrap();
-                //     stream.handshake().await.unwrap();
-                // });
-            // }
-            // let mut listener = ListenerEndpoint::new(ServerAddress::Tcp(addr.into(), None));
+        // let _ = podns.run(|| {
+        //     let now = Instant::now();
+        //     let output = Command::new("sh").arg("-c").arg("ip a").output().unwrap();
+        //     info!(
+        //         "command complete in {:?}; code={}, stdout={}, stderr={}",
+        //         now.elapsed(),
+        //         output.status,
+        //         std::str::from_utf8(&output.stdout).unwrap(),
+        //         std::str::from_utf8(&output.stderr).unwrap()
+        //     );
 
-            let listener = TcpListener::bind("127.0.0.1:15006").unwrap();
-            listeners.push(listener);
+        //     let mut owned_string: String = "reg_counter_".to_owned();
+        //     let pid_str = pid.to_string();
+        //     owned_string.push_str(&pid_str);
 
-            // my_proxy.add_tcp("0.0.0.0:6191");
-            my_proxy.add_tcp_with_settings("0.0.0.0:6191", options);
 
-            // my_server.add_service(my_proxy);
-            my_server.run_service1(my_proxy);
-            let ten_millis = time::Duration::from_secs(2);
-            thread::sleep(ten_millis);
-        });
+        //     let mut my_proxy = pingora_proxy::http_proxy_service(
+        //         &my_server.configuration,
+        //         MyGateway {
+        //             req_metric: register_int_counter!(owned_string, "Number of request").unwrap(),
+        //         },
+        //     );
+        //     let mut options = TcpSocketOptions::default();
+        //     options.tp_proxy = Some(true);
+        //     options.mark = Some(1337);
+
+        //     let listener = TcpListener::bind("127.0.0.1:15006").unwrap();
+        //     listeners.push(listener);
+
+        //     // my_proxy.add_tcp("0.0.0.0:6191");
+        //     my_proxy.add_tcp_with_settings("0.0.0.0:6191", options);
+
+        //     // my_server.add_service(my_proxy);
+        //     my_server.run_service1(my_proxy);
+        //     let ten_millis = time::Duration::from_secs(2);
+        //     thread::sleep(ten_millis);
+        // });
     }
 
     sleep(Duration::from_secs(200)).await;
