@@ -10,19 +10,19 @@ prometheus = "0"
 async-trait="0.1"
 # pingora = { version = "0.3", features = [ "lb", "proxy" ] }
 # pingora ={ git = "https://github.com/escoffier/pingora", branch = "netns1" }
-pingora ={ git = "https://github.com/escoffier/pingora", rev = "71079c8dd1546ac05715dc725eab7d47e0af492a" }
+pingora ={ git = "https://github.com/escoffier/pingora", rev = "e28ea4893580a99502cfc9f01343e2038cb40ab9" }
 # pingora-http = { version = "0.3.0" }
 # pingora-http = { git = "https://github.com/escoffier/pingora", branch = "netns1" }
-pingora-http = { git = "https://github.com/escoffier/pingora", rev = "71079c8dd1546ac05715dc725eab7d47e0af492a" }
+pingora-http = { git = "https://github.com/escoffier/pingora", rev = "e28ea4893580a99502cfc9f01343e2038cb40ab9" }
 #  pingora-core = { version = "0.3.0", default-features = false }
 # pingora-core = { git = "https://github.com/escoffier/pingora", branch = "netns1" }
-pingora-core = { git = "https://github.com/escoffier/pingora", rev = "71079c8dd1546ac05715dc725eab7d47e0af492a" }
+pingora-core = { git = "https://github.com/escoffier/pingora", rev = "e28ea4893580a99502cfc9f01343e2038cb40ab9" }
 # pingora-proxy = { version = "0.3.0" }
 # pingora-proxy = { git = "https://github.com/escoffier/pingora", branch = "netns1" }
-pingora-proxy = { git = "https://github.com/escoffier/pingora", rev = "71079c8dd1546ac05715dc725eab7d47e0af492a" }
-# pingora-runtime = { git = "https://github.com/escoffier/pingora", rev = "71079c8dd1546ac05715dc725eab7d47e0af492a" }
-# pingora-timeout = { git = "https://github.com/escoffier/pingora", rev = "71079c8dd1546ac05715dc725eab7d47e0af492a" }
-# pingora-error = { git = "https://github.com/escoffier/pingora", rev = "71079c8dd1546ac05715dc725eab7d47e0af492a" }
+pingora-proxy = { git = "https://github.com/escoffier/pingora", rev = "e28ea4893580a99502cfc9f01343e2038cb40ab9" }
+# pingora-runtime = { git = "https://github.com/escoffier/pingora", rev = "e28ea4893580a99502cfc9f01343e2038cb40ab9" }
+# pingora-timeout = { git = "https://github.com/escoffier/pingora", rev = "e28ea4893580a99502cfc9f01343e2038cb40ab9" }
+# pingora-error = { git = "https://github.com/escoffier/pingora", rev = "e28ea4893580a99502cfc9f01343e2038cb40ab9" }
 # log = {}
 libc = "0.2"
 log = "0.4"
