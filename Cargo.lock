@@ -1232,7 +1232,7 @@ checksum = "8b870d8c151b6f2fb93e84a13146138f05d02ed11c7e7c54f8826aaaf7c9f184"
 [[package]]
 name = "pingora"
 version = "0.3.0"
-source = "git+https://github.com/escoffier/pingora?rev=c36153a6ead1740ce187d09487e7e8cec2d623c9#c36153a6ead1740ce187d09487e7e8cec2d623c9"
+source = "git+https://github.com/escoffier/pingora?rev=71079c8dd1546ac05715dc725eab7d47e0af492a#71079c8dd1546ac05715dc725eab7d47e0af492a"
 dependencies = [
  "pingora-cache",
  "pingora-core",
@@ -1245,7 +1245,7 @@ dependencies = [
 [[package]]
 name = "pingora-cache"
 version = "0.3.0"
-source = "git+https://github.com/escoffier/pingora?rev=c36153a6ead1740ce187d09487e7e8cec2d623c9#c36153a6ead1740ce187d09487e7e8cec2d623c9"
+source = "git+https://github.com/escoffier/pingora?rev=71079c8dd1546ac05715dc725eab7d47e0af492a#71079c8dd1546ac05715dc725eab7d47e0af492a"
 dependencies = [
  "ahash 0.8.11",
  "async-trait",
@@ -1278,7 +1278,7 @@ dependencies = [
 [[package]]
 name = "pingora-core"
 version = "0.3.0"
-source = "git+https://github.com/escoffier/pingora?rev=c36153a6ead1740ce187d09487e7e8cec2d623c9#c36153a6ead1740ce187d09487e7e8cec2d623c9"
+source = "git+https://github.com/escoffier/pingora?rev=71079c8dd1546ac05715dc725eab7d47e0af492a#71079c8dd1546ac05715dc725eab7d47e0af492a"
 dependencies = [
  "ahash 0.8.11",
  "async-trait",
@@ -1329,12 +1329,12 @@ dependencies = [
 [[package]]
 name = "pingora-error"
 version = "0.3.0"
-source = "git+https://github.com/escoffier/pingora?rev=c36153a6ead1740ce187d09487e7e8cec2d623c9#c36153a6ead1740ce187d09487e7e8cec2d623c9"
+source = "git+https://github.com/escoffier/pingora?rev=71079c8dd1546ac05715dc725eab7d47e0af492a#71079c8dd1546ac05715dc725eab7d47e0af492a"
 
 [[package]]
 name = "pingora-header-serde"
 version = "0.3.0"
-source = "git+https://github.com/escoffier/pingora?rev=c36153a6ead1740ce187d09487e7e8cec2d623c9#c36153a6ead1740ce187d09487e7e8cec2d623c9"
+source = "git+https://github.com/escoffier/pingora?rev=71079c8dd1546ac05715dc725eab7d47e0af492a#71079c8dd1546ac05715dc725eab7d47e0af492a"
 dependencies = [
  "bytes",
  "http 1.1.0",
@@ -1349,7 +1349,7 @@ dependencies = [
 [[package]]
 name = "pingora-http"
 version = "0.3.0"
-source = "git+https://github.com/escoffier/pingora?rev=c36153a6ead1740ce187d09487e7e8cec2d623c9#c36153a6ead1740ce187d09487e7e8cec2d623c9"
+source = "git+https://github.com/escoffier/pingora?rev=71079c8dd1546ac05715dc725eab7d47e0af492a#71079c8dd1546ac05715dc725eab7d47e0af492a"
 dependencies = [
  "bytes",
  "http 1.1.0",
@@ -1359,7 +1359,7 @@ dependencies = [
 [[package]]
 name = "pingora-ketama"
 version = "0.3.0"
-source = "git+https://github.com/escoffier/pingora?rev=c36153a6ead1740ce187d09487e7e8cec2d623c9#c36153a6ead1740ce187d09487e7e8cec2d623c9"
+source = "git+https://github.com/escoffier/pingora?rev=71079c8dd1546ac05715dc725eab7d47e0af492a#71079c8dd1546ac05715dc725eab7d47e0af492a"
 dependencies = [
  "crc32fast",
 ]
@@ -1367,7 +1367,7 @@ dependencies = [
 [[package]]
 name = "pingora-load-balancing"
 version = "0.3.0"
-source = "git+https://github.com/escoffier/pingora?rev=c36153a6ead1740ce187d09487e7e8cec2d623c9#c36153a6ead1740ce187d09487e7e8cec2d623c9"
+source = "git+https://github.com/escoffier/pingora?rev=71079c8dd1546ac05715dc725eab7d47e0af492a#71079c8dd1546ac05715dc725eab7d47e0af492a"
 dependencies = [
  "arc-swap",
  "async-trait",
@@ -1388,7 +1388,7 @@ dependencies = [
 [[package]]
 name = "pingora-lru"
 version = "0.3.0"
-source = "git+https://github.com/escoffier/pingora?rev=c36153a6ead1740ce187d09487e7e8cec2d623c9#c36153a6ead1740ce187d09487e7e8cec2d623c9"
+source = "git+https://github.com/escoffier/pingora?rev=71079c8dd1546ac05715dc725eab7d47e0af492a#71079c8dd1546ac05715dc725eab7d47e0af492a"
 dependencies = [
  "arrayvec",
  "hashbrown 0.12.3",
@@ -1399,7 +1399,7 @@ dependencies = [
 [[package]]
 name = "pingora-openssl"
 version = "0.3.0"
-source = "git+https://github.com/escoffier/pingora?rev=c36153a6ead1740ce187d09487e7e8cec2d623c9#c36153a6ead1740ce187d09487e7e8cec2d623c9"
+source = "git+https://github.com/escoffier/pingora?rev=71079c8dd1546ac05715dc725eab7d47e0af492a#71079c8dd1546ac05715dc725eab7d47e0af492a"
 dependencies = [
  "foreign-types",
  "libc",
@@ -1412,7 +1412,7 @@ dependencies = [
 [[package]]
 name = "pingora-pool"
 version = "0.3.0"
-source = "git+https://github.com/escoffier/pingora?rev=c36153a6ead1740ce187d09487e7e8cec2d623c9#c36153a6ead1740ce187d09487e7e8cec2d623c9"
+source = "git+https://github.com/escoffier/pingora?rev=71079c8dd1546ac05715dc725eab7d47e0af492a#71079c8dd1546ac05715dc725eab7d47e0af492a"
 dependencies = [
  "crossbeam-queue",
  "log",
@@ -1426,7 +1426,7 @@ dependencies = [
 [[package]]
 name = "pingora-proxy"
 version = "0.3.0"
-source = "git+https://github.com/escoffier/pingora?rev=c36153a6ead1740ce187d09487e7e8cec2d623c9#c36153a6ead1740ce187d09487e7e8cec2d623c9"
+source = "git+https://github.com/escoffier/pingora?rev=71079c8dd1546ac05715dc725eab7d47e0af492a#71079c8dd1546ac05715dc725eab7d47e0af492a"
 dependencies = [
  "async-trait",
  "bytes",
@@ -1448,7 +1448,7 @@ dependencies = [
 [[package]]
 name = "pingora-runtime"
 version = "0.3.0"
-source = "git+https://github.com/escoffier/pingora?rev=c36153a6ead1740ce187d09487e7e8cec2d623c9#c36153a6ead1740ce187d09487e7e8cec2d623c9"
+source = "git+https://github.com/escoffier/pingora?rev=71079c8dd1546ac05715dc725eab7d47e0af492a#71079c8dd1546ac05715dc725eab7d47e0af492a"
 dependencies = [
  "once_cell",
  "rand",
@@ -1459,7 +1459,7 @@ dependencies = [
 [[package]]
 name = "pingora-timeout"
 version = "0.3.0"
-source = "git+https://github.com/escoffier/pingora?rev=c36153a6ead1740ce187d09487e7e8cec2d623c9#c36153a6ead1740ce187d09487e7e8cec2d623c9"
+source = "git+https://github.com/escoffier/pingora?rev=71079c8dd1546ac05715dc725eab7d47e0af492a#71079c8dd1546ac05715dc725eab7d47e0af492a"
 dependencies = [
  "once_cell",
  "parking_lot",
